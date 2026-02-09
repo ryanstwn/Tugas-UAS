@@ -205,27 +205,27 @@ with tab1:
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-    if filtered_df.empty:
-        st.warning("No data available for the selected filters.")
-    else:
-        user_dist = pd.DataFrame({
-            'User Type': ['Casual', 'Registered'],
-            'Total Rentals': [
-                filtered_df['casual'].sum(),
-                filtered_df['registered'].sum()
-            ]
-        })
-
-        fig = px.bar(
-            user_dist,
-            x='User Type',
-            y='Total Rentals',
-            title='Rental Distribution by User Type',
-            text='Total Rentals'
-        )
-
-        fig.update_layout(height=400)
-        st.plotly_chart(fig, use_container_width=True)
+        if filtered_df.empty:
+            st.warning("No data available for the selected filters.")
+        else:
+            user_dist = pd.DataFrame({
+                'User Type': ['Casual', 'Registered'],
+                'Total Rentals': [
+                    filtered_df['casual'].sum(),
+                    filtered_df['registered'].sum()
+                ]
+            })
+        
+            fig = px.bar(
+                user_dist,
+                x='User Type',
+                y='Total Rentals',
+                title='Rental Distribution by User Type',
+                text='Total Rentals'
+            )
+        
+            fig.update_layout(height=400)
+            st.plotly_chart(fig, use_container_width=True)
 
     
     with col1:
