@@ -51,7 +51,7 @@ st.markdown("""
 # Load data
 @st.cache_data
 def load_data():
-    df = pd.read_csv('hour.csv')
+    df = pd.read_csv('Dataset/hour.csv')
     
     # Data preprocessing
     df['dteday'] = pd.to_datetime(df['dteday'])
