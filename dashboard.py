@@ -205,25 +205,28 @@ with tab1:
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
-        # Rental distribution
-        fig = go.Figure()
-        fig.add_trace(go.Box(y=filtered_df['cnt'], name='Total', marker_color='lightblue'))
-        fig.add_trace(go.Box(y=filtered_df['casual'], name='Casual', marker_color='lightcoral'))
-        fig.add_trace(go.Box(y=filtered_df['registered'], name='Registered', marker_color='lightgreen'))
-        
-        fig.update_layout(
+    if filtered_df.empty:
+        st.warning("No data available for the selected filters.")
+    else:
+        user_dist = pd.DataFrame({
+            'User Type': ['Casual', 'Registered'],
+            'Total Rentals': [
+                filtered_df['casual'].sum(),
+                filtered_df['registered'].sum()
+            ]
+        })
+
+        fig = px.bar(
+            user_dist,
+            x='User Type',
+            y='Total Rentals',
             title='Rental Distribution by User Type',
-            yaxis_title='Number of Rentals',
-            height=400,
-            showlegend=True
+            text='Total Rentals'
         )
+
+        fig.update_layout(height=400)
         st.plotly_chart(fig, use_container_width=True)
-    
-    # Key Insights
-    st.markdown('<div class="insight-box">', unsafe_allow_html=True)
-    st.subheader("🔍 Key Business Insights")
-    
-    col1, col2, col3 = st.columns(3)
+
     
     with col1:
         st.markdown("**🎯 Peak Performance**")
